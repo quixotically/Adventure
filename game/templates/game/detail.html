@@ -1,17 +1,12 @@
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% extends "game/base.html" %}
 
-{% if situation.situation_text %}
+{% block content %}
+  {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
   <div><p>{{ situation.situation_text }}</p></div>
-  {% if situation.choice_set.all %}
-    <form action="{% url 'game:choose' situation.id %}" method="post">
-      {% csrf_token %}
-      {% for choice in situation.choice_set.all %}
-          <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-          <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
-      {% endfor %}
-      <input type="submit" value="Submit" />
-    </form>
+  {% if situation.choice_set.all.count > 0 %}
+    {% include "game/choices.html" with situation=situation %}
+  {% else %}
+    {% include "game/restart.html" %}
   {% endif %}
-{% else %}
-    <p>Situation is unavailable.</p>
-{% endif %}
+{% endblock content %}

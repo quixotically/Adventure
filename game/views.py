@@ -1,8 +1,10 @@
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.urls import reverse
+from django.views import generic
 
 from .models import Situation, Choice
+
 
 def index(request):
     return detail(request, 1)

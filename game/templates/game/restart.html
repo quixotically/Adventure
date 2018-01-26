@@ -1,0 +1,4 @@
+<form action="{% url 'game:index' %}" method="post">
+  {% csrf_token %}
+  <input type="submit" value="Restart" />
+</form>
